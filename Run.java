@@ -1,10 +1,9 @@
 package main;
 
 /**
- * This program serves to sort all suffixes of a given a string in lexicographic
- * order,
- * with the choice of one of two algorithms, namely Selection Sort and Merge
- * Sort.
+ * This program serves to sort all suffixes of a given string
+ * in lexicographic order, with the choice of one of two algorithms,
+ * namely Selection Sort and Merge Sort.
  */
 public class Run {
 
