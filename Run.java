@@ -50,7 +50,7 @@ public class Run {
         }
 
         System.out.println();
-        
+
         // Printing the suffix array to verify the corrected order.
         for (int i = 0; i < nLength; i++) {
             System.out.print(suffixArray[i] + " ");
@@ -172,6 +172,8 @@ public class Run {
     }
 
     public static void main(String args[]) {
+
+        // Using the input "tgtgtgtgcaccg" from Sir's example.
         System.out.println("Selection Sort...");
         selectionSort("tgtgtgtgcaccg");
         System.out.println("\n\nMerge Sort...");
