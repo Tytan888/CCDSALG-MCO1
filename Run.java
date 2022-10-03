@@ -83,15 +83,6 @@ public class Run {
 
             // Combine
             merge(substrings, nStart, nMid, nEnd);
-
-            // Printing the substrings to verify the corrected order.
-            System.out.println();
-            for (int i = nStart; i < nEnd + 1; i++) {
-               // System.out.println(i + ":" + substrings[i]);
-            }
-            System.out.println("Start, Mid, End: " + nStart + ", " + nMid + ", " + nEnd);
-            System.out.println();
-
         }
     }
 
