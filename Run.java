@@ -1,7 +1,5 @@
 package main;
 
-import java.lang.Math.random;
-
 /**
  * This program serves to sort all suffixes of a given string
  * in lexicographic order, with the choice of one of two algorithms,
@@ -14,9 +12,11 @@ public class Run {
      * then proceeds to sort all suffixes within said String
      * using the selection sort algorithm.
      * 
-     * @param input the string to be cut down into its suffixes
+     * @param input   the string to be cut down into its suffixes
+     * @param doPrint whether or not to print the result for empirical testing
+     *                purposes
      */
-    public static void selectionSort(String input) {
+    public static void selectionSort(String input, boolean doPrint) {
 
         // Get the several suffixes within the main inputted String.
         int nLength = input.length();
@@ -45,16 +45,18 @@ public class Run {
             suffixArray[minIndex] = temp2;
         }
 
-        // Printing the suffixes to verify the corrected order.
-        for (int i = 0; i < nLength; i++) {
-            System.out.println(suffixes[i]);
-        }
+        if (doPrint) {
+            // Printing the suffixes to verify the corrected order.
+            for (int i = 0; i < nLength; i++) {
+                System.out.println(suffixes[i]);
+            }
 
-        System.out.println();
+            System.out.println();
 
-        // Printing the suffix array to verify the corrected order.
-        for (int i = 0; i < nLength; i++) {
-            System.out.print(suffixArray[i] + " ");
+            // Printing the suffix array to verify the corrected order.
+            for (int i = 0; i < nLength; i++) {
+                System.out.print(suffixArray[i] + " ");
+            }
         }
     }
 
@@ -107,9 +109,11 @@ public class Run {
      * then proceeds to sort all suffixes within said String
      * using the merge sort algorithm.
      * 
-     * @param input the string to be cut down into its suffixes
+     * @param input   the string to be cut down into its suffixes
+     * @param doPrint whether or not to print the result for empirical testing
+     *                purposes
      */
-    public static void mergeSort(String input) {
+    public static void mergeSort(String input, boolean doPrint) {
 
         // Get the several suffixes within the main inputted String.
         int nLength = input.length();
@@ -133,16 +137,18 @@ public class Run {
         // Combine the suffixes.
         merge(suffixes, suffixArray, 0, nMid, nLength - 1);
 
-        // Printing the suffixes to verify the corrected order.
-        for (int i = 0; i < nLength; i++) {
-            System.out.println(suffixes[i]);
-        }
+        if (doPrint) {
+            // Printing the suffixes to verify the corrected order.
+            for (int i = 0; i < nLength; i++) {
+                System.out.println(suffixes[i]);
+            }
 
-        System.out.println();
+            System.out.println();
 
-        // Printing the suffix array to verify the corrected order.
-        for (int i = 0; i < nLength; i++) {
-            System.out.print(suffixArray[i] + " ");
+            // Printing the suffix array to verify the corrected order.
+            for (int i = 0; i < nLength; i++) {
+                System.out.print(suffixArray[i] + " ");
+            }
         }
     }
 
@@ -174,53 +180,65 @@ public class Run {
 
     /**
      * This method takes in n in the form of an int,
-     * then proceeds to generate a random String with 
-     * length n.
+     * then proceeds to generate a random String with
+     * length n with only the characters 'a', 'c',
+     * 't', and 'g'.
      * 
-     * @param n length for the String to be generated 
+     * @param n length for the String to be generated
      */
-    public static String generateRandomString(int n) 
-    { 
-        // chose a Character randomly from this String 
+    public static String generateRandomString(int n) {
+        // Choose a character randomly from this String.
         String alphaString = "acgt";
-        
-        // create StringBuffer size of AlphaNumericString 
-        StringBuilder sb = new StringBuilder(n); 
-        
-        for (int i = 0; i < n; i++) { 
-        
-            // generate a random number between 
-            // 0 to AlphaNumericString variable length 
-            int index = (int)(alphaString.length() * Math.random()); 
-            
-            // add Character one by one in end of sb 
-            sb.append(alphaString.charAt(index)); 
-        } 
-        
-        return sb.toString(); 
-    } 
+
+        // Create StringBuffer size of AlphaNumericString.
+        StringBuilder sb = new StringBuilder(n);
+
+        for (int i = 0; i < n; i++) {
+
+            // Generate a random number between
+            // 0 to AlphaNumericString variable length.
+            int index = (int) (alphaString.length() * Math.random());
+
+            // Add characters one by one at end of sb.
+            sb.append(alphaString.charAt(index));
+        }
+
+        return sb.toString();
+    }
 
     public static void main(String args[]) {
 
-        // Using the input "tgtgtgtgcaccg" from Sir's example.
+        // This represents the input size of string.
+        int n = 128;
+        // This indicates whether the result should be printed or not.
+        boolean doPrint = false;
+
+        // This stores the string to be tested on.
+        String input = generateRandomString(n);
+
         System.out.println("Selection Sort...");
-        
-        long startSelectionTime = System.nanoTime(); // Starts timer
-        
-        selectionSort(generateRandomString(128));
-        
-        // Ends timer and Subtract it with the start time to get the total time
-        long totalSelectionTime = System.nanoTime() - startSelectionTime; 
-        System.out.println("\n" + totalSelectionTime + " nanoseconds"); // Prints out time in nanoseconds
 
-        System.out.println("\n\nMerge Sort...");
+        // Starts the timer.
+        long startSelectionTime = System.nanoTime();
 
-        long startMergeTime = System.nanoTime(); // Starts timer
+        selectionSort(input, doPrint);
 
-        mergeSort(generateRandomString(128));
-        
-        // Ends timer and Subtract it with the start time to get the total time
-        long totalMergeTime = System.nanoTime() - startMergeTime; 
-        System.out.println("\n" + totalMergeTime + " nanoseconds"); // Prints out time in nanoseconds
+        // Ends timer and subtracts it with the start time to get the total time.
+        long totalSelectionTime = System.nanoTime() - startSelectionTime;
+        // Prints out time in nanoseconds.
+        System.out.println("\n" + totalSelectionTime + " nanoseconds");
+
+        System.out.println("\nMerge Sort...");
+
+        // Starts the timer.
+        long startMergeTime = System.nanoTime();
+
+        mergeSort(input, doPrint);
+
+        // Ends timer and subtracts it with the start time to get the total time.
+        long totalMergeTime = System.nanoTime() - startMergeTime;
+        // Prints out time in nanoseconds.
+        System.out.println("\n" + totalMergeTime + " Nanoseconds");
+
     }
 }
