@@ -1,5 +1,7 @@
 package main;
 
+import java.lang.Math.random;
+
 /**
  * This program serves to sort all suffixes of a given string
  * in lexicographic order, with the choice of one of two algorithms,
@@ -170,12 +172,55 @@ public class Run {
         }
     }
 
+    /**
+     * This method takes in n in the form of an int,
+     * then proceeds to generate a random String with 
+     * length n.
+     * 
+     * @param n length for the String to be generated 
+     */
+    public static String generateRandomString(int n) 
+    { 
+        // chose a Character randomly from this String 
+        String alphaString = "acgt";
+        
+        // create StringBuffer size of AlphaNumericString 
+        StringBuilder sb = new StringBuilder(n); 
+        
+        for (int i = 0; i < n; i++) { 
+        
+            // generate a random number between 
+            // 0 to AlphaNumericString variable length 
+            int index = (int)(alphaString.length() * Math.random()); 
+            
+            // add Character one by one in end of sb 
+            sb.append(alphaString.charAt(index)); 
+        } 
+        
+        return sb.toString(); 
+    } 
+
     public static void main(String args[]) {
 
         // Using the input "tgtgtgtgcaccg" from Sir's example.
         System.out.println("Selection Sort...");
-        selectionSort("tgtgtgtgcaccg");
+        
+        long startSelectionTime = System.nanoTime(); // Starts timer
+        
+        selectionSort(generateRandomString(128));
+        
+        // Ends timer and Subtract it with the start time to get the total time
+        long totalSelectionTime = System.nanoTime() - startSelectionTime; 
+        System.out.println("\n" + totalSelectionTime + " nanoseconds"); // Prints out time in nanoseconds
+
         System.out.println("\n\nMerge Sort...");
-        mergeSort("tgtgtgtgcaccg");
+
+        long startMergeTime = System.nanoTime(); // Starts timer
+
+        mergeSort(generateRandomString(128));
+        
+        // Ends timer and Subtract it with the start time to get the total time
+        long totalMergeTime = System.nanoTime() - startMergeTime; 
+        System.out.println("\n" + totalMergeTime + " nanoseconds"); // Prints out time in nanoseconds
     }
 }
