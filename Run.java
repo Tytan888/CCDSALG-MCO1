@@ -208,37 +208,44 @@ public class Run {
 
     public static void main(String args[]) {
 
-        // This represents the input size of string.
-        int n = 128;
-        // This indicates whether the result should be printed or not.
-        boolean doPrint = false;
+        // Loops len times represeting number of trials
+        int len = 5;
+        for (int i = 1; i <= len; i++) {
+            
+            // This represents the input size of string.
+            int n = 131072;
+            // This indicates whether the result should be printed or not.
+            boolean doPrint = false;
+    
+            // This stores the string to be tested on.
+            String input = generateRandomString(n);
+    
+            System.out.println("\nTrial " + i);
+            System.out.println("\nSelection Sort...");
+    
+            // Starts the timer.
+            long startSelectionTime = System.nanoTime();
+    
+            selectionSort(input, doPrint);
+    
+            // Ends timer and subtracts it with the start time to get the total time.
+            long totalSelectionTime = System.nanoTime() - startSelectionTime;
+            // Prints out time in nanoseconds.
+            System.out.println(totalSelectionTime + " nanoseconds");
+    
+            System.out.println("\nMerge Sort...");
+    
+            // Starts the timer.
+            long startMergeTime = System.nanoTime();
+    
+            mergeSort(input, doPrint);
+    
+            // Ends timer and subtracts it with the start time to get the total time.
+            long totalMergeTime = System.nanoTime() - startMergeTime;
+            // Prints out time in nanoseconds.
+            System.out.println(totalMergeTime + " Nanoseconds");
 
-        // This stores the string to be tested on.
-        String input = generateRandomString(n);
-
-        System.out.println("Selection Sort...");
-
-        // Starts the timer.
-        long startSelectionTime = System.nanoTime();
-
-        selectionSort(input, doPrint);
-
-        // Ends timer and subtracts it with the start time to get the total time.
-        long totalSelectionTime = System.nanoTime() - startSelectionTime;
-        // Prints out time in nanoseconds.
-        System.out.println("\n" + totalSelectionTime + " nanoseconds");
-
-        System.out.println("\nMerge Sort...");
-
-        // Starts the timer.
-        long startMergeTime = System.nanoTime();
-
-        mergeSort(input, doPrint);
-
-        // Ends timer and subtracts it with the start time to get the total time.
-        long totalMergeTime = System.nanoTime() - startMergeTime;
-        // Prints out time in nanoseconds.
-        System.out.println("\n" + totalMergeTime + " Nanoseconds");
+        }
 
     }
 }
