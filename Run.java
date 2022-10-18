@@ -194,7 +194,7 @@ public class Run {
     public static void main(String args[]) {
 
         // This indicates whether the result should be printed or not.
-        boolean doPrint = false;
+        boolean doPrint = true;
         // This stores the name of the file containing the inputs and outputs.
         String inputFile = "256xd.txt";
         String outputFile = "256xdout.txt";
