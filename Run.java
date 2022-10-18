@@ -1,5 +1,11 @@
 package main;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.io.IOException;
+import java.io.FileWriter;
+
 /**
  * This program serves to sort all suffixes of a given string
  * in lexicographic order, with the choice of one of two algorithms,
@@ -15,8 +21,9 @@ public class Run {
      * @param input   the string to be cut down into its suffixes
      * @param doPrint whether or not to print the result for empirical testing
      *                purposes
+     * @param writer FileWriter object to be used for output
      */
-    public static void selectionSort(String input, boolean doPrint) {
+    public static void selectionSort(String input, boolean doPrint, FileWriter writer) throws IOException {
 
         // Get the several suffixes within the main inputted String.
         int nLength = input.length();
@@ -46,16 +53,18 @@ public class Run {
         }
 
         if (doPrint) {
-            // Printing the suffixes to verify the corrected order.
-            for (int i = 0; i < nLength; i++) {
-                System.out.println(suffixes[i]);
-            }
-
-            System.out.println();
+            // Printing the suffixes to verify the corrected order.44
+            /*
+             * for (int i = 0; i < nLength; i++) {
+             * System.out.println(suffixes[i]);
+             * }
+             * 
+             * System.out.println();
+             */
 
             // Printing the suffix array to verify the corrected order.
             for (int i = 0; i < nLength; i++) {
-                System.out.print(suffixArray[i] + " ");
+                writer.write(suffixArray[i] + " ");
             }
         }
     }
@@ -112,8 +121,10 @@ public class Run {
      * @param input   the string to be cut down into its suffixes
      * @param doPrint whether or not to print the result for empirical testing
      *                purposes
+     * @param writer FileWriter object to be used for output
+     * @throws IOException
      */
-    public static void mergeSort(String input, boolean doPrint) {
+    public static void mergeSort(String input, boolean doPrint, FileWriter writer) throws IOException {
 
         // Get the several suffixes within the main inputted String.
         int nLength = input.length();
@@ -139,15 +150,17 @@ public class Run {
 
         if (doPrint) {
             // Printing the suffixes to verify the corrected order.
-            for (int i = 0; i < nLength; i++) {
-                System.out.println(suffixes[i]);
-            }
-
-            System.out.println();
+            /*
+             * for (int i = 0; i < nLength; i++) {
+             * System.out.println(suffixes[i]);
+             * }
+             * 
+             * System.out.println();
+             */
 
             // Printing the suffix array to verify the corrected order.
             for (int i = 0; i < nLength; i++) {
-                System.out.print(suffixArray[i] + " ");
+                writer.write(suffixArray[i] + " ");
             }
         }
     }
@@ -178,67 +191,67 @@ public class Run {
         }
     }
 
-    /**
-     * This method takes in n in the form of an int,
-     * then proceeds to generate a random String with
-     * length n with only the characters 'a', 'c',
-     * 't', and 'g'.
-     * 
-     * @param n length for the String to be generated
-     */
-    public static String generateRandomString(int n) {
-        // Choose a character randomly from this String.
-        String alphaString = "acgt";
-
-        // Create StringBuffer size of AlphaNumericString.
-        StringBuilder sb = new StringBuilder(n);
-
-        for (int i = 0; i < n; i++) {
-
-            // Generate a random number between
-            // 0 to AlphaNumericString variable length.
-            int index = (int) (alphaString.length() * Math.random());
-
-            // Add characters one by one at end of sb.
-            sb.append(alphaString.charAt(index));
-        }
-
-        return sb.toString();
-    }
-
     public static void main(String args[]) {
 
-        // This represents the input size of string.
-        int n = 128;
         // This indicates whether the result should be printed or not.
         boolean doPrint = false;
+        // This stores the name of the file containing the inputs and outputs.
+        String inputFile = "256xd.txt";
+        String outputFile = "256xdout.txt";
 
-        // This stores the string to be tested on.
-        String input = generateRandomString(n);
+        // First, try creating the output file from the name specified.
+        try {
+            File outFile = new File(outputFile);
+            if (outFile.createNewFile()) {
+                FileWriter myWriter = new FileWriter(outFile);
 
-        System.out.println("Selection Sort...");
+                // If successful, then try opening the input file.
+                File inFile = new File(inputFile);
+                Scanner sc = new Scanner(inFile);
+                int i = 0;
 
-        // Starts the timer.
-        long startSelectionTime = System.nanoTime();
+                // Perform both sorts on each test case.
+                while (sc.hasNextLine()) {
+                    String input = sc.nextLine();
+                    i++;
+                    myWriter.write("\n___________________________\n\nTest Case #" + i + "\n");
+                    myWriter.write("Selection Sort..." + "\n");
 
-        selectionSort(input, doPrint);
+                    // Starts the timer.
+                    long startSelectionTime = System.nanoTime();
 
-        // Ends timer and subtracts it with the start time to get the total time.
-        long totalSelectionTime = System.nanoTime() - startSelectionTime;
-        // Prints out time in nanoseconds.
-        System.out.println("\n" + totalSelectionTime + " nanoseconds");
+                    selectionSort(input, doPrint, myWriter);
 
-        System.out.println("\nMerge Sort...");
+                    // Ends timer and subtracts it with the start time to get the total time.
+                    long totalSelectionTime = System.nanoTime() - startSelectionTime;
+                    // Prints out time in nanoseconds.
+                    myWriter.write("\n" + totalSelectionTime + " Nanoseconds" + "\n");
 
-        // Starts the timer.
-        long startMergeTime = System.nanoTime();
+                    myWriter.write("\nMerge Sort..." + "\n");
 
-        mergeSort(input, doPrint);
+                    // Starts the timer.
+                    long startMergeTime = System.nanoTime();
 
-        // Ends timer and subtracts it with the start time to get the total time.
-        long totalMergeTime = System.nanoTime() - startMergeTime;
-        // Prints out time in nanoseconds.
-        System.out.println("\n" + totalMergeTime + " Nanoseconds");
+                    mergeSort(input, doPrint, myWriter);
+
+                    // Ends timer and subtracts it with the start time to get the total time.
+                    long totalMergeTime = System.nanoTime() - startMergeTime;
+                    // Prints out time in nanoseconds.
+                    myWriter.write("\n" + totalMergeTime + " Nanoseconds" + "\n");
+                }
+                sc.close();
+                myWriter.close();
+            } else {
+                System.out.println("File already exists. Please try again.");
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred. Please try again.");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("An error occurred. Please try again.");
+            e.printStackTrace();
+        }
 
     }
 }
