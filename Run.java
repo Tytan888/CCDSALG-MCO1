@@ -37,7 +37,7 @@ public class Run {
             suffixArray[i] = i;
         }
 
-        // Sort the suffixes using insertion sort.
+        // Sort the suffixes using selection sort.
         for (int i = 0; i < nLength - 1; i++) {
             int minIndex = i;
             for (int j = i + 1; j < nLength; j++) {
